@@ -1,0 +1,76 @@
+###Elastic API
+
+product - индекс
+_doc - тип
+711f1f0b-1d48-412a-bb7e-435b1bb38690 - ID
+##GET
+product/_doc/711f1f0b-1d48-412a-bb7e-435b1bb38690
+
+
+##PUT
+product/_doc/zzzzz
+{
+ 	"ProductName": "Телевизор Xiaomi e6728",
+ 	"SupplyRegions": [
+    "Minsk",
+    "Washington"
+  ]
+}
+
+##DELETE BY ID
+
+product/_doc/zzzzz
+
+
+##DELETE BY QUERY
+
+product/_delete_by_query
+{
+    "query":{
+        "match":{
+            "ProductName": "Телевизор Xiaomi e6728"
+        }
+    }
+}
+
+
+##UPDATE
+
+
+product/_doc/zzzzz/_update
+#Добавление сущности
+{	"doc": {
+		"test": "test"
+	}
+}
+
+
+#Изменение сущности
+product/_doc/zzzzz/_update
+
+{
+	"script": {
+		"source": "ctx._source.ProductName = params.name",
+		"lang": "painless",
+		"params": {
+			"name": "NewName"
+		}
+	}
+}
+
+
+product/_doc/zzzzz/_update
+#Добавление значения к сущности
+{
+	"script": {
+		"source": "ctx._source.SupplyRegions.add(params.regions)",
+		"lang": "painless",
+		"params": {
+			"regions": "1213"
+		}
+	}
+}
+
+
+
+
